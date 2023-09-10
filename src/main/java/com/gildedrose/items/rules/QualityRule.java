@@ -7,8 +7,8 @@ import java.lang.annotation.*;
 @Repeatable(QualityRules.class)
 public @interface QualityRule {
 
-    int by() default 1;
-    int whenSellInIs() default  0;
-    SellInDirection sellInDirection() default SellInDirection.OVER;
+    int by();
+    int whenSellInIs();
+    SellInCriteria sellInCriteria();
     int order() default 0;
 }

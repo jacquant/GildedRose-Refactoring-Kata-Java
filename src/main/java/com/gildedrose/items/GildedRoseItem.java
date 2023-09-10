@@ -3,7 +3,6 @@ package com.gildedrose.items;
 import com.gildedrose.items.rules.RuleEngine;
 
 import static com.gildedrose.items.ItemUtils.LOWEST_QUALITY;
-import static com.gildedrose.items.ItemUtils.hasQualityUnderLowestValuePossible;
 
 public interface GildedRoseItem {
 
@@ -14,10 +13,6 @@ public interface GildedRoseItem {
     }
 
     Item item();
-
-    default String getName() {
-        return item().name;
-    }
 
     private void updateQuality() {
         RuleEngine.getUpdateQualityValue(getClass(), item().sellIn).ifPresent(this::updateQualityBy);
@@ -40,7 +35,7 @@ public interface GildedRoseItem {
         if (item().quality > highestQualityPossible) {
             item().quality = highestQualityPossible;
         }
-        if (hasQualityUnderLowestValuePossible(item())) {
+        if (ItemUtils.hasQualityUnderLowestValuePossible(item())) {
             item().quality = LOWEST_QUALITY;
         }
     }

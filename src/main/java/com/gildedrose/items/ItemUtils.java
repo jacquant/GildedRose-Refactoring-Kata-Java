@@ -15,10 +15,6 @@ public class ItemUtils {
         return item.name.equals(name);
     }
 
-    static boolean namesNotMatch(Item item, String name) {
-        return !nameMatch(item, name);
-    }
-
     static int highestQualityPossible(Item item) {
         if (nameMatch(item, SULFURAS)) {
             return HIGHEST_QUALITY_LEGENDARY;

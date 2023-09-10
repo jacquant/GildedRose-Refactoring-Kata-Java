@@ -27,13 +27,11 @@ public class RuleEngine {
     }
 
     private boolean qualityRuleIsApplicable(QualityRule rule, int sellIn) {
-        if (SellInDirection.OVER.equals(rule.sellInDirection())) {
+        if (SellInCriteria.OVER.equals(rule.sellInCriteria())) {
             return sellIn > rule.whenSellInIs();
         }
         return sellIn <= rule.whenSellInIs();
     }
-
-
 
     public boolean canBeReset(Class<?> clazz, int sellInOver) {
         return Optional.ofNullable(clazz.getAnnotation(ResetQualitySellInOverRule.class))

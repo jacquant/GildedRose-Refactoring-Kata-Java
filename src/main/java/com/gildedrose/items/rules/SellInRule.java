@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface SellInRule {
 
-    int by() default 1;
+    int by();
 }
