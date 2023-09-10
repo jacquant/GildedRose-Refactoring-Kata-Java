@@ -1,6 +1,11 @@
 package com.gildedrose;
 
+import java.util.function.Function;
+
 class GildedRose {
+    private static final String AGED_BRIE = "Aged Brie";
+    private static final String BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT = "Backstage passes to a TAFKAL80ETC concert";
+    private static final String SULFURAS_HAND_OF_RAGNAROS = "Sulfuras, Hand of Ragnaros";
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -8,66 +13,91 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
+        for (Item item : items) {
             // CHECK NORMAL ITEM
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            if (namesNotMatch(item, AGED_BRIE)
+                    && namesNotMatch(item, BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
                 // QUALITY CANNOT BE NEGATIVE
-                if (items[i].quality > 0) {
-                    // EXCLUDE SULFURAS AS LEGENDARY ITEM
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
+                decreaseQuality(item);
             } else { // SPECIAL ITEM ==> QUALITY INCREASES
-
                 // QUALITY CANNOT BE MORE THAN 50
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                increaseQuality(item, (itemToIncreaseMore) -> {
+                    if (nameMatch(itemToIncreaseMore, BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
                         // QUALITY INCREASE BY 2 WHEN THERE ARE 10 DAYS OR LESS
-                        if (items[i].sellIn < 11) {
+                        if (itemToIncreaseMore.sellIn < 11) {
                             // QUALITY CANNOT BE MORE THAN 50
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
+                            increaseQuality(item);
                         }
                         // QUALITY INCREASE BY 3 WHEN THERE ARE 5 DAYS OR LESS
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
+                        if (itemToIncreaseMore.sellIn < 6) {
+                            increaseQuality(item);
                         }
                     }
-                }
+                    return itemToIncreaseMore;
+                });
             }
 
             // DECREASE SELLIN FOR ALL ITEM EXCEPT SULFURAS
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
+            if (namesNotMatch(item, SULFURAS_HAND_OF_RAGNAROS)) {
+                decreaseSellIn(item);
             }
 
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                // QUALITY CAN BE NEGATIVE FOR COMMON ITEM
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
+            if (item.sellIn < 0) {
+                if (namesNotMatch(item, AGED_BRIE)) {
+                    if (namesNotMatch(item, BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT)) {
+                        decreaseQuality(item);
                     } else {
                         // BACKSTAGE ITEM QUALITY BECOME 0 AFTER CONCERT
-                        items[i].quality = items[i].quality - items[i].quality;
+                        resetQuality(item);
                     }
                 } else {
                     // QUALITY OF AGED BRIE INCREASES EVEN AFTER SELLIN DATE
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
+                    increaseQuality(item);
                 }
             }
         }
+    }
+
+    private static void decreaseSellIn(Item item) {
+        item.sellIn -= 1;
+    }
+
+    private static void decreaseQuality(Item item) {
+        if (item.quality > 0) {
+            // EXCLUDE SULFURAS AS LEGENDARY ITEM
+            if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
+                updateQualityBy(item, -1);
+            }
+        }
+    }
+
+    private static void resetQuality(Item item) {
+        item.quality = 0;
+    }
+
+    private static void increaseQuality(Item item) {
+        if (item.quality < 50) {
+            updateQualityBy(item, 1);
+        }
+    }
+
+    private static void updateQualityBy(Item item, int value) {
+        // QUALITY never negative is currently asserted by upper checks
+        item.quality += value;
+    }
+
+    private static void increaseQuality(Item item, Function<Item, Item> ifQualityLessThan50) {
+        if (item.quality < 50) {
+            updateQualityBy(item, 1);
+            ifQualityLessThan50.apply(item);
+        }
+    }
+
+    private static boolean nameMatch(Item item, String name) {
+        return item.name.equals(name);
+    }
+
+    private static boolean namesNotMatch(Item item, String name) {
+        return !nameMatch(item, name);
     }
 }
