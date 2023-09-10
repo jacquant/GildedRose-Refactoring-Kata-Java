@@ -40,14 +40,23 @@ Feature: Gilded Rose
       Then I should get item with name="Aged Brie"
       And I should get item with quality=50
       And I should get item with sellIn=9
-
+# This scenario was working with the original codebase, and has been added based on the original codebase but
+# does not match the requirements
+#    Scenario: The Quality of Aged Brie increases twice as fast after the sell by date
+#      Given The item with name="Aged Brie" and sellIn=0 and quality=10
+#      When I update the quality
+#      Then I should get item with name="Aged Brie"
+#      And I should get item with quality=12
+#      And I should get item with sellIn=-1
+  #
     Scenario: The Quality of Aged Brie increases twice as fast after the sell by date
       Given The item with name="Aged Brie" and sellIn=0 and quality=10
       When I update the quality
       Then I should get item with name="Aged Brie"
-      And I should get item with quality=12
+      And I should get item with quality=11
       And I should get item with sellIn=-1
-      
+
+
     Scenario: "Sulfuras, Hand of Ragnaros", being a legendary item, never has to be sold or decreases in Quality
       Given The item with name="Sulfuras, Hand of Ragnaros" and sellIn=10 and quality=80
       When I update the quality
