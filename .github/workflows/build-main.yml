@@ -1,11 +1,12 @@
-name: Java CI with Gradle + build docker
+name: Java CI with Gradle
 
 env:
   CONTEXT_DIR: './'
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - '**'
 
 jobs:
   build-and-publish:
