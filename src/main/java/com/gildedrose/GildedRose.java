@@ -11,7 +11,7 @@ class GildedRose {
     List<GildedRoseItem> items;
 
     public Item getItems(int index) {
-        return items.get(index).getItem();
+        return items.get(index).item();
     }
 
     public GildedRose(Item[] items) {
