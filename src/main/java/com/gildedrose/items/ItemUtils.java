@@ -2,7 +2,7 @@ package com.gildedrose.items;
 
 import lombok.experimental.UtilityClass;
 
-import static com.gildedrose.items.SulfurasItem.SULFURAS;
+import static com.gildedrose.items.customs.SulfurasItem.SULFURAS;
 
 @UtilityClass
 public class ItemUtils {
@@ -26,7 +26,7 @@ public class ItemUtils {
         return HIGHEST_QUALITY;
     }
 
-    static boolean hasLowestQualityValuePossible(Item item) {
-        return item.quality == LOWEST_QUALITY;
+    static boolean hasQualityUnderLowestValuePossible(Item item) {
+        return item.quality < LOWEST_QUALITY;
     }
 }

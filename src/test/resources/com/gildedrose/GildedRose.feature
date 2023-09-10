@@ -49,7 +49,7 @@ Feature: Gilded Rose
 #      And I should get item with quality=12
 #      And I should get item with sellIn=-1
   #
-    Scenario: The Quality of Aged Brie increases twice as fast after the sell by date
+    Scenario: The Quality of Aged Brie increases not twice as fast after the sell by date
       Given The item with name="Aged Brie" and sellIn=0 and quality=10
       When I update the quality
       Then I should get item with name="Aged Brie"
