@@ -105,3 +105,17 @@ Feature: Gilded Rose
       Then I should get item with name="Backstage passes to a TAFKAL80ETC concert"
       And I should get item with quality=50
       And I should get item with sellIn=7
+
+    Scenario: "Conjured" items degrade in Quality twice as fast as normal items
+      Given The item with name="Conjured Mana Cake" and sellIn=10 and quality=10
+      When I update the quality
+      Then I should get item with name="Conjured Mana Cake"
+      And I should get item with quality=8
+      And I should get item with sellIn=9
+
+    Scenario: "Conjured" items degrade in Quality twice as fast as normal items after sell by date
+      Given The item with name="Conjured Mana Cake" and sellIn=0 and quality=10
+      When I update the quality
+      Then I should get item with name="Conjured Mana Cake"
+      And I should get item with quality=6
+      And I should get item with sellIn=-1
