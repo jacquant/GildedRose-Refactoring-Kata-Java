@@ -14,10 +14,6 @@ public class AgedBrieItem implements QualityIncreasableGildedRoseItem {
     @Override
     public void updateItem() {
         decreaseSellIn();
-        if (sellInIsOver(0)) {
-            increaseQualityBy(1);
-        } else {
-            increaseQualityBy(2);
-        }
+        increaseQualityBy(1);
     }
 }
