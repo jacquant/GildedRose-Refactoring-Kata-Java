@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 
+import com.gildedrose.items.Item;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -36,16 +37,16 @@ public class StepDefinitions {
 
     @Then("I should get item with name={string}")
     public void i_should_get_name_as(String expectedName) {
-        assertEquals(expectedName, app.items[0].name);
+        assertEquals(expectedName, app.getItems(0).name);
     }
 
     @Then("I should get item with sellIn={int}")
     public void i_should_get_sellin_as(int expectedSellIn) {
-        assertEquals(expectedSellIn, app.items[0].sellIn);
+        assertEquals(expectedSellIn, app.getItems(0).sellIn);
     }
     @Then("I should get item with quality={int}")
     public void i_should_get_quality_as(int expectedQuality) {
-        assertEquals(expectedQuality, app.items[0].quality);
+        assertEquals(expectedQuality, app.getItems(0).quality);
     }
 }
 
