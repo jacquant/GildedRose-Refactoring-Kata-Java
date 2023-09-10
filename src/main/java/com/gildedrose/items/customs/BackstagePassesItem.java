@@ -6,8 +6,6 @@ import com.gildedrose.items.rules.QualityRule;
 import com.gildedrose.items.rules.ResetQualitySellInOverRule;
 import com.gildedrose.items.rules.SellInDirection;
 import com.gildedrose.items.rules.SellInRule;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @SellInRule(by = RegularItem.SELL_IN_VALUE)
 @QualityRule(by = BackstagePassesItem.INCREASE_VALUE, whenSellInIs = 10, sellInDirection =  SellInDirection.OVER)

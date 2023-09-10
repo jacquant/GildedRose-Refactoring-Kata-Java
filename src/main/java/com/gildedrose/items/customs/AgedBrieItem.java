@@ -5,8 +5,6 @@ import com.gildedrose.items.Item;
 import com.gildedrose.items.rules.SellInDirection;
 import com.gildedrose.items.rules.SellInRule;
 import com.gildedrose.items.rules.QualityRule;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @SellInRule(by = RegularItem.SELL_IN_VALUE)
 @QualityRule(by = AgedBrieItem.INCREASE_VALUE, whenSellInIs = 0, sellInDirection = SellInDirection.OVER, order = 0)
