@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 class GildedRose {
-    List<GildedRoseItem> items;
+    final List<GildedRoseItem> items;
 
     public Item getItems(int index) {
         return items.get(index).item();

@@ -1,24 +1,27 @@
-apply plugin: "groovy"
-apply plugin: "java"
-apply plugin: "application"
-
+plugins {
+    id 'java'
+    id 'application'
+    id 'groovy'
+}
 repositories {
     mavenCentral()
 }
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
+java {
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
 
 dependencies {
-    implementation 'org.apache.groovy:groovy:4.0.14'
-    testImplementation 'io.cucumber:cucumber-java:7.13.0'
-    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.13.0'
+    implementation 'org.apache.groovy:groovy:4.0.15'
+    testImplementation 'io.cucumber:cucumber-java:7.14.0'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.14.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testImplementation 'org.junit.platform:junit-platform-suite-api:1.8.0'
-    compileOnly 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    testCompileOnly 'org.projectlombok:lombok:1.18.28'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+    testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.0'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 configurations {
@@ -28,7 +31,7 @@ configurations {
 }
 
 application {
-    mainClassName = "com.gildedrose.TexttestFixture"
+    mainClass = "com.gildedrose.TexttestFixture"
 }
 
 test {
@@ -42,7 +45,7 @@ tasks.register('cucumber') {
     dependsOn assemble, testClasses
     doLast {
         javaexec {
-            main = "io.cucumber.core.cli.Main"
+            mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = [
                     '--plugin', 'pretty',
